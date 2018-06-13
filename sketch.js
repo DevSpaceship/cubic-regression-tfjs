@@ -1,4 +1,4 @@
-let points_x = [], points_y = [], xs = [], ys = [];
+let points_x = [], points_y = [], xs = [], ys = [], p_poly;
 const xmin = -2, ymin = -2, xmax = 2, ymax = 2; //Canvas boundaries
 const point_radius = 10;
 const resolution = 0.025;
@@ -14,7 +14,9 @@ const optimizer = tf.train.adam(learningRate);
 
 function setup()
 {
+  p_poly = createP(' ');
   createCanvas(600, 400);
+  createP('by /devspaceship');
   background(50);
   noStroke();
 
@@ -47,10 +49,8 @@ function draw()
   {
     ellipse(map(points_x[i],xmin,xmax,0,width),map(points_y[i],ymin,ymax,height,0),point_radius,point_radius);
   }
-
-  textSize(20);
-  fill(225); // vv  Writing the guessed coefficients  vv
-  text(a.dataSync()[0].toFixed(2) + ' x^3 + ' + b.dataSync()[0].toFixed(2) + ' x^2 + ' + c.dataSync()[0].toFixed(2) + ' x + ' + d.dataSync()[0].toFixed(2),30,30);
+  console.log(p_poly);
+  p_poly.html(a.dataSync()[0].toFixed(2) + ' x^3 + ' + b.dataSync()[0].toFixed(2) + ' x^2 + ' + c.dataSync()[0].toFixed(2) + ' x + ' + d.dataSync()[0].toFixed(2));
 
   if (points_x.length != 0) //Make a training step if there's at least one point
   {
